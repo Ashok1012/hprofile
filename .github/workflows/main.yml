@@ -7,5 +7,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Testing workflow
-        run: echo "workflow works!"
+      - name: code checkout
+        uses: actions/checkout@v7
+
+      - name: Maven Test
+        run:  mvn Test
+      
+      - name: checkstyle
+        run:  mvn checkstyle:checkstyle
