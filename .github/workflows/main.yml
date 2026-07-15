@@ -1,17 +1,47 @@
 name: Hprofile Actions
+
 on:
   workflow_dispatch:
+
+env:
+  AWS_REGION: us-east-2
+  ECS_REPOSITORY: actapp
 
 jobs:
   Testing:
     runs-on: ubuntu-latest
 
     steps:
-      - name: code checkout
-        uses: actions/checkout@v7
+      - name: Code Checkout
+        uses: actions/checkout@v4
 
-      - name: Maven test
-        run:  mvn test
+      - name: Set up Java 11
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '11'
+          cache: maven
+
+      - name: Run Unit Tests
+        run: mvn test
+
+      - name: Run Checkstyle
+        run: mvn checkstyle:checkstyle
+
+      - name: Setup SonarQube Scanner
+        uses: warchant/setup-sonar-scanner@v7
+
+      - name: Run SonarQube Scan
+        run: |
+          sonar-scanner \
+            -Dsonar.host.url=${{ secrets.SONAR_URL }} \
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }} \
+            -Dsonar.organization=${{ secrets.SONAR_ORGANIZATION }} \
+            -Dsonar.projectKey=${{ secrets.SONAR_PROJECT_KEY }} \
+            -Dsonar.sources=src \
+            -Dsonar.junit.reportsPath=target/surefire-reports \
+            -Dsonar.jacoco.reportsPath=target/jacoco.exec \
+            -Dsonar.java.checkstyle.reportPaths=target/checkstyle-result.xml \
+            -Dsonar.java.binaries=target/classes
+
       
-      - name: checkstyle
-        run:  mvn checkstyle:checkstyle
