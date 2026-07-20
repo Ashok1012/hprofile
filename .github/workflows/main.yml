@@ -6,7 +6,7 @@ env:
   ECS_SERVICE: vpro-act-service-3
   ECS_CLUSTER: vproact
   ECS_TASK_DEFINITION: aws-files/taskdeffile.json
-  CONTAINER_NAME: vproapp
+  ECS_CONTAINER_NAME: vproapp
 jobs:
   Testing:
     runs-on: ubuntu-latest
