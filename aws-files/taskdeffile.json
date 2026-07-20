@@ -1,9 +1,9 @@
 {
-  "taskDefinitionArn": "arn:aws:ecs:us-east-1:274703560660:task-definition/vpro-act:1",
+  "taskDefinitionArn": "arn:aws:ecs:us-east-1:274703560660:task-definition/vpro-act:3",
   "containerDefinitions": [
     {
       "name": "vproapp",
-      "image": "274703560660.dkr.ecr.us-east-1.amazonaws.com/actapp",
+      "image": "274703560660.dkr.ecr.us-east-1.amazonaws.com/vproact",
       "cpu": 0,
       "portMappings": [
         {
@@ -34,9 +34,10 @@
     }
   ],
   "family": "vpro-act",
+  "taskRoleArn": "arn:aws:iam::274703560660:role/ecsTaskExecutionRole",
   "executionRoleArn": "arn:aws:iam::274703560660:role/ecsTaskExecutionRole",
   "networkMode": "awsvpc",
-  "revision": 1,
+  "revision": 3,
   "volumes": [],
   "status": "ACTIVE",
   "requiresAttributes": [
@@ -51,6 +52,9 @@
     },
     {
       "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+    },
+    {
+      "name": "com.amazonaws.ecs.capability.task-iam-role"
     },
     {
       "name": "ecs.capability.execution-role-ecr-pull"
@@ -68,8 +72,8 @@
   "placementConstraints": [],
   "compatibilities": [
     "EC2",
-    "FARGATE",
-    "MANAGED_INSTANCES"
+    "MANAGED_INSTANCES",
+    "FARGATE"
   ],
   "runtimePlatform": {
     "cpuArchitecture": "X86_64",
@@ -79,8 +83,8 @@
     "FARGATE"
   ],
   "cpu": "1024",
-  "memory": "2048",
-  "registeredAt": "2026-07-19T20:48:41.961Z",
+  "memory": "3072",
+  "registeredAt": "2026-07-20T20:26:27.535Z",
   "registeredBy": "arn:aws:iam::274703560660:user/itadmi",
   "enableFaultInjection": false,
   "tags": []
